@@ -434,6 +434,7 @@ class FoodSearchProblem:
       foodGrid:       a Grid (see game.py) of either True or False, specifying remaining food
     """
     def __init__(self, startingGameState):
+        # Note our starting state now includes the Capsule positions
         self.start = (startingGameState.getPacmanPosition(), startingGameState.getFood(), tuple(startingGameState.getCapsules()))
         self.walls = startingGameState.getWalls()
         self.startingGameState = startingGameState
@@ -492,6 +493,7 @@ class FoodSearchProblem:
         if position in nextCapsules :
             nextCapsules.remove(position)
         nextCapsules = tuple(nextCapsules)
+        # Our new state information now contains Capsule locations
         return ((nextx, nexty), nextFood, nextCapsules)
 
     def getCostOfActionSequence(self, actions):
@@ -549,11 +551,11 @@ def foodHeuristic(state, problem):
     other hand, inadmissible or inconsistent heuristics may find optimal
     solutions, so be careful.
 
-    The state is a tuple ( pacmanPosition, foodGrid ) where foodGrid is a Grid
+    The state is a tuple ( pacmanPosition, foodGrid, capsules) where foodGrid is a Grid
     (see game.py) of either True or False. You can call foodGrid.asList() to get
-    a list of food coordinates instead.
+    a list of food coordinates instead.  capsules contains a list of capsule locations.
 
-    If you want access to info like walls, capsules, etc., you can query the
+    If you want access to info like walls, etc., you can query the
     problem.  For example, problem.walls gives you a Grid of where the walls
     are.
 
