@@ -429,9 +429,10 @@ class FoodSearchProblem:
     A search problem associated with finding the a path that collects all of the
     food (dots) in a Pacman game.
 
-    A search state in this problem is a tuple ( pacmanPosition, foodGrid ) where
+    A search state in this problem is a tuple ( pacmanPosition, foodGrid, capsules ) where
       pacmanPosition: a tuple (x,y) of integers specifying Pacman's position
       foodGrid:       a Grid (see game.py) of either True or False, specifying remaining food
+      capsules:       a tuple containing tuples (x,y) that specify the location of each capsule
     """
     def __init__(self, startingGameState):
         # Note our starting state now includes the Capsule positions
@@ -542,18 +543,11 @@ def foodHeuristic(state, problem):
     """
     Your heuristic for the FoodSearchProblem goes here.
 
-    This heuristic must be consistent to ensure correctness.  First, try to come
-    up with an admissible heuristic; almost all admissible heuristics will be
-    consistent as well.
-
-    If using A* ever finds a solution that is worse uniform cost search finds,
-    your heuristic is *not* consistent, and probably not admissible!  On the
-    other hand, inadmissible or inconsistent heuristics may find optimal
-    solutions, so be careful.
+    This heuristic must be admissible to ensure correctness.
 
     The state is a tuple ( pacmanPosition, foodGrid, capsules) where foodGrid is a Grid
     (see game.py) of either True or False. You can call foodGrid.asList() to get
-    a list of food coordinates instead.  capsules contains a list of capsule locations.
+    a list of food coordinates instead.  capsules contains a tuple of capsule locations.
 
     If you want access to info like walls, etc., you can query the
     problem.  For example, problem.walls gives you a Grid of where the walls
