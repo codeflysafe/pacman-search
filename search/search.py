@@ -247,9 +247,6 @@ class Node:
     def __repr__(self):
         return ('({0},{1})'.format(self.state, self.f))
 
-    def key(self):
-        return self.parent + "_" + self.state
-
     def solution(self):
         solution = []
         solution.append(self.action)
@@ -262,8 +259,9 @@ class Node:
         return solution
 
 
-def rbfs(problem, node: Node, f_limit, heuristic, frontier):
-
+def rbfs(problem, node: Node, f_limit, heuristic):
+    print("\nIn RBFS Function with node ", node.state,
+          " with node's f value = ", node.f, " and f-limit = ", f_limit)
     # (state, action, fScore, gScore, path) = node
     if problem.isGoalState(node.state):
         return node, None
@@ -277,12 +275,13 @@ def rbfs(problem, node: Node, f_limit, heuristic, frontier):
         childNode = Node(succState, succAction, node)
         childNode.g = succCost + node.g
         childNode.f = childNode.g + heuristic(succState, problem)
-        childNode.f = childNode.f
+        childNode.f = max(childNode.f, node.f)
         successors.append(childNode)
 
     if len(successors) == 0:
         return None, infinity
 
+    print("\n Got following successors for  ", node.state, ":", successors)
     # for i in range(len(successors)):
     #     successors[i].f = max(successors[i].f, node.f)
 
@@ -302,12 +301,9 @@ def rbfs(problem, node: Node, f_limit, heuristic, frontier):
 
 def recursivebfs(problem, heuristic=nullHeuristic):
 
-    frontier = {}
     # COMP90054 Task 2, Implement your Recursive Best First Search algorithm here
     node = Node(problem.getStartState(), '', None)
-    node.f = heuristic(node.state, problem)
-    frontier[node.key()] = node
-    result, _ = rbfs(problem, node, infinity, heuristic, frontier)
+    result, _ = rbfs(problem, node, infinity, heuristic)
     return result.solution()
 
 
