@@ -260,8 +260,7 @@ class Node:
 
 
 def rbfs(problem, node: Node, f_limit, heuristic):
-    print("\nIn RBFS Function with node ", node.state,
-          " with node's f value = ", node.f, " and f-limit = ", f_limit)
+
     # (state, action, fScore, gScore, path) = node
     if problem.isGoalState(node.state):
         return node, None
@@ -281,7 +280,7 @@ def rbfs(problem, node: Node, f_limit, heuristic):
     if len(successors) == 0:
         return None, infinity
 
-    print("\n Got following successors for  ", node.state, ":", successors)
+    # print("\n Got following successors for  ", node.state, ":", successors)
     # for i in range(len(successors)):
     #     successors[i].f = max(successors[i].f, node.f)
 
