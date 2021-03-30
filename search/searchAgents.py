@@ -583,7 +583,7 @@ def get_min(queue):
     return cheapestItem
 
 
-def foodHeuristic(state, problem):
+def foodHeuristic(state, gridproblem):
     """
     Your heuristic for the FoodSearchProblem goes here.
 
@@ -604,10 +604,30 @@ def foodHeuristic(state, problem):
     Subsequent calls to this heuristic can access
     problem.heuristicInfo['wallCount']
     """
+
     position, foodGrid, capsules = state
     # COMP90054 Task 3, Implement your code here
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    value = 0
+    food_available = foodGrid.asList()
+    if len(food_available) == 0:
+        return 0
+    max_distance = ((0, 0), (0, 0), 0)
+    for current_food in food_available:
+        for select_food in food_available:
+            if (current_food == select_food):
+                pass
+            else:
+                distance = util.manhattanDistance(current_food, select_food)
+                if (max_distance[2] < distance):
+                    max_distance = (current_food, select_food, distance)
+    if (max_distance[0] == (0, 0) and max_distance[1] == (0, 0)):
+        value = util.manhattanDistance(position, food_available[0])
+    else:
+        d1 = util.manhattanDistance(position, max_distance[0])
+        d2 = util.manhattanDistance(position, max_distance[1])
+        value = max_distance[2] + (d1 + d2) / 2
+    return value
 
 
 class ClosestDotSearchAgent(SearchAgent):
